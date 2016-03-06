@@ -1,8 +1,39 @@
 import os
 
-
 print os.name
 
+InPutPath = "/Users/dongyayun/Documents/project/tiebasign_new/app/src/main/res/mipmap-hdpi"
 
-def pngtowebp(input):
-    
+
+def isPngFiles(inputFiles):
+    names = intern(inputFiles).split(".")
+
+    if (names[-1] == "png"):
+        print inputFiles + " is png file"
+        return True
+    else:
+        print inputFiles + " not png file"
+        return False
+
+
+def pngtowebp(inputFiles):
+    print "HelloWorld"
+    name = inputFiles.split(".")[0]
+    print name
+
+    os.popen("rm -rf " + name + ".webp")
+    os.popen("cwebp -q 50 " + inputFiles + " -o " + name + ".webp")
+
+
+def doSomething(DirPath):
+    os.chdir(DirPath)
+    if (False == os.path.exists("pngFiles")):
+        os.mkdir("pngFiles")
+    fileLists = os.listdir(DirPath)
+    for file in fileLists:
+        if isPngFiles(file):
+            pngtowebp(file)
+            os.popen("mv " + file + " pngFiles/")
+
+
+doSomething(InPutPath)
